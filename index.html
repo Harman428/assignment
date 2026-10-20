@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kindness Quiz 😂</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+       body {
+    font-family: 'Comic Neue', cursive;
+    text-align: center;
+    margin: 0;
+    padding: 25px 15px;
+    min-height: 100vh;
+
+    /* Your meme image as the background */
+    background-image:
+        linear-gradient(rgba(255,255,255,0.25),
+                        rgba(255,255,255,0.25)),
+        url("bk.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.94);
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 25px;
+    border: 5px solid #222;
+    border-radius: 25px;
+    box-shadow: 8px 8px 0 #222;
+}
+
+h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 48px;
+    letter-spacing: 2px;
+    color: #ff3cac;
+    -webkit-text-stroke: 1px #222;
+    text-shadow: 3px 3px 0 #ffe66d;
+    margin-top: 5px;
+}
+
+.subtitle {
+    font-family: 'Bangers', cursive;
+    font-size: 25px;
+    color: #6c35d5;
+}
+
+#score {
+    background: #ffe66d;
+    padding: 12px;
+    border: 3px solid #222;
+    border-radius: 12px;
+    font-family: 'Bangers', cursive;
+    font-size: 23px;
+}
+
+#question {
+    font-family: 'Comic Neue', cursive;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+#answers button,
+.action-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border: 3px solid #222;
+    border-radius: 16px;
+    background: #8c52ff;
+    color: white;
+    font-family: 'Comic Neue', cursive;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #222;
+    transition: transform 0.15s;
+}
+
+#answers button:hover,
+.action-button:hover {
+    transform: translateY(-3px) rotate(-1deg);
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+#meme {
+    display: none;
+    width: 100%;
+    max-width: 320px;
+    height: 230px;
+    object-fit: contain;
+    margin: 20px auto;
+    border: 3px solid #222;
+    border-radius: 15px;
+    background: white;
+}
+
+#feedback {
+    font-family: 'Bangers', cursive;
+    font-size: 27px;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    color: #e84393;
+}
+
+#next {
+    background: #ff7043;
+}
+
+@media (max-width: 450px) {
+    .container {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+
+    #question {
+        font-size: 19px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>😂 Kindness Quiz!</h1>
+
+        <p class="subtitle">
+            🌍 Refugee Families Edition
+        </p>
+
+        <p>
+            Test your knowledge!
+        </p>
+
+        <p id="score">Score: 0 / 0</p>
+
+        <div id="question"></div>
+
+        <div id="answers"></div>
+
+        <img id="meme" src="" alt="Funny reaction meme">
+
+        <p id="feedback">
+            Ready? Choose your answer! 👀
+        </p>
+
+        <button id="next"
+                class="action-button"
+                onclick="nextQuestion()"
+                disabled>
+            Next Question ➡️
+        </button>
+
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. What might refugee families need when arriving in a new country?",
+                answers: [
+                    "A. Support and a safe place to live",
+                    "B. A million dollars 💰",
+                    "C. A personal spaceship 🚀"
+                ],
+                correct: 0
+            },
+            {
+                question: "2. How can an educator help a child feel welcome?",
+                answers: [
+                    "A. Ignore the child",
+                    "B. Learn about their culture and include them",
+                    "C. Give them a 10-hour exam"
+                ],
+                correct: 1
+            },
+            {
+                question: "3. What challenge might a refugee child experience?",
+                answers: [
+                    "A. Adjusting to a new language",
+                    "B. Having too many gaming consoles",
+                    "C. Being a secret superhero"
+                ],
+                correct: 0
+            },
+            {
+                question: "4. What is a good way to support a refugee family?",
+                answers: [
+                    "A. Judge their background",
+                    "B. Tell them to solve everything alone",
+                    "C. Connect them with helpful community services"
+                ],
+                correct: 2
+            },
+              {
+        question: "5. A newly arrived child rarely speaks during group time. What should an educator do FIRST?",
+        answers: [
+            "A. Force the child to speak in front of everyone",
+            "B. Give the child time, observe their cues, and offer gentle ways to participate",
+            "C. Assume the child does not understand anything"
+        ],
+        correct: 1,
+        explanation: "A patient, responsive approach respects the child's comfort, language development, and individual needs."
+    },
+    {
+        question: "6. A family has different cultural practices from those familiar to the educator. What is the BEST response?",
+        answers: [
+            "A. Ask respectful questions and work with the family to understand their preferences",
+            "B. Tell the family to follow the educator's culture",
+            "C. Avoid communicating with the family"
+        ],
+        correct: 0,
+        explanation: "Respectful, two-way communication supports trust and helps educators provide culturally responsive care."
+    },
+            {
+                question: "7. What can help refugee children feel they belong?",
+                answers: [
+                    "A. Friendship, inclusion, and understanding",
+                    "B. Excluding them from activities",
+                    "C. Giving everyone a mountain of homework"
+                ],
+                correct: 0
+            }
+        ];
+
+        // Your selected GIF memes
+        const correctMeme =
+            "https://media.tenor.com/sQXkvagqfWYAAAAC/lol-funny-memes.gif";
+
+        const wrongMeme =
+            "https://www.gifcen.com/wp-content/uploads/2022/01/meme-gif-1.gif";
+
+        // Sound files
+        const correctSound = new Audio("anime-wow-sound-mp3cut.mp3");
+        const wrongSound = new Audio("confused-sound-effect.mp3");
+
+        let current = 0;
+        let score = 0;
+        let answered = false;
+
+        function playSound(sound) {
+            correctSound.pause();
+            wrongSound.pause();
+
+            correctSound.currentTime = 0;
+            wrongSound.currentTime = 0;
+
+            sound.currentTime = 0;
+
+            sound.play().catch((error) => {
+                console.log("Sound could not play. Check the audio file.", error);
+            });
+        }
+
+        function showQuestion() {
+            answered = false;
+
+            const q = questions[current];
+
+            document.getElementById("question").textContent =
+                q.question;
+
+            document.getElementById("answers").innerHTML = "";
+
+            const meme = document.getElementById("meme");
+            meme.style.display = "none";
+            meme.removeAttribute("src");
+
+            document.getElementById("feedback").textContent =
+                "Choose wisely... 👀";
+
+            const nextButton = document.getElementById("next");
+            nextButton.disabled = true;
+            nextButton.textContent = "Next Question ➡️";
+
+            q.answers.forEach((answer, index) => {
+                const button = document.createElement("button");
+
+                button.textContent = answer;
+
+                button.onclick = function () {
+                    checkAnswer(index);
+                };
+
+                document.getElementById("answers")
+                    .appendChild(button);
+            });
+
+            document.getElementById("score").textContent =
+                `Score: ${score} / ${current}`;
+        }
+
+        function checkAnswer(choice) {
+            if (answered) return;
+
+            answered = true;
+
+            const q = questions[current];
+            const buttons =
+                document.querySelectorAll("#answers button");
+
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+
+                if (index === q.correct) {
+                    button.style.background = "#20bf6b";
+                }
+
+                if (index === choice && choice !== q.correct) {
+                    button.style.background = "#eb3b5a";
+                }
+            });
+
+            const meme = document.getElementById("meme");
+            meme.style.display = "block";
+
+            const nextButton = document.getElementById("next");
+            nextButton.disabled = false;
+
+            if (choice === q.correct) {
+                score++;
+                meme.src = correctMeme;
+                playSound(correctSound); // <-- Added sound trigger here!
+
+                document.getElementById("feedback").textContent =
+                    "🎉 CORRECT! Big brain energy! 🔥";
+
+            } else {
+                meme.src = wrongMeme;
+                playSound(wrongSound); // <-- Added sound trigger here!
+
+                document.getElementById("feedback").textContent =
+                    "💀 WRONG ANSWER! Correct answer: " +
+                    q.answers[q.correct];
+            }
+
+            document.getElementById("score").textContent =
+                `Score: ${score} / ${current + 1}`;
+
+            if (current === questions.length - 1) {
+                nextButton.textContent = "See Final Result 🏆";
+            }
+        }
+
+        function nextQuestion() {
+            if (!answered) return;
+
+            current++;
+
+            if (current >= questions.length) {
+                showResult();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("question").textContent =
+                "Quiz Completed! 🎓";
+
+            document.getElementById("answers").innerHTML = "";
+
+            const meme = document.getElementById("meme");
+            meme.style.display = "block";
+
+            if (score === questions.length) {
+                meme.src = correctMeme;
+                document.getElementById("feedback").textContent =
+                    "👑 PERFECT SCORE! You are the Belonging Boss!";
+            } else if (score >= 3) {
+                meme.src = correctMeme;
+                document.getElementById("feedback").textContent =
+                    "😎 Great job! You scored " + score +
+                    " out of " + questions.length + "!";
+            } else {
+                meme.src = wrongMeme;
+                document.getElementById("feedback").textContent =
+                    "😂 You scored " + score + " out of " +
+                    questions.length + ". Keep learning!";
+            }
+
+            document.getElementById("score").textContent =
+                "🏁 Final Score: " + score + "/" + questions.length;
+
+            const nextButton = document.getElementById("next");
+            nextButton.textContent = "Play Again 🔄";
+            nextButton.disabled = false;
+            nextButton.onclick = restartQuiz;
+        }
+
+        function restartQuiz() {
+            current = 0;
+            score = 0;
+
+            document.getElementById("next").onclick = nextQuestion;
+
+            showQuestion();
+        }
+
+        // Start the quiz
+        showQuestion();
+    </script>
+
+</body>
+</html>
